@@ -15,6 +15,7 @@ class ProductPage(BasePage):
         answer = str(math.log(abs((12 * math.sin(float(x))))))
         alert.send_keys(answer)
         alert.accept()
+#        time.sleep(1000000)
         try:
             alert = self.browser.switch_to.alert
             alert_text = alert.text
@@ -30,3 +31,7 @@ class ProductPage(BasePage):
         product_price = self.browser.find_element(*ProductPageLocators.product_price).text
         added_product_price = self.browser.find_element(*ProductPageLocators.added_product_price).text
         assert product_price == added_product_price, "The price of the added product does not match "
+    def should_not_be_success_message(self):
+        assert self.is_not_element_present(*ProductPageLocators.success_message), "Success message is presented, but should not be"
+    def should_disappear_success_message(self):
+        assert self.is_disappeared(*ProductPageLocators.success_message), "Success message is not disappeared, but should be"
